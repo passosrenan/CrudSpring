@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+        <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix = "c" %>
+
+        <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix = "fmt" %>
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -57,43 +61,48 @@
 </head>
 <body>
 	<div id="form">
+	
         <form action="cadastrarCliente" >
+        <input type="hidden" name="id" value="${cliente.id }">
             <h2 class="titulo">Cadastrar</h2>
             <label for="">Nome</label>
             <div class="input">
-                <input type="text" name="nome" placeholder="Nome" ${cliente.nome }>
+                <input type="text" name="nome" placeholder="Nome"  required="required" value="${cliente.nome }">
             </div>
             <label for="">Endereco</label>
             <div class="input">
-                <input type="text" name="endereco" placeholder="endereço"${cliente.endereco }>
+                <input type="text" name="endereco" placeholder="endereço" required="required" value="${cliente.endereco }">
             </div>
             <label for="">Telefone</label>
             <div class="input">
-                <input type="number" name="telefone" placeholder="telefone"${cliente.telefone }>
+                <input type="number" name="telefone" placeholder="telefone" required="required" value="${cliente.telefone }">
             </div>
             <label for="">Email</label>
             <div class="input">
-                <input type="text" name="email" placeholder="Email">
+                <input type="text" name="email" placeholder="Email" required="required" value="${cliente.email }">
             </div>
             <label for="">Genero</label>
             <div class="">
-                <select name="sexo" id="" >
-                    <option value="M" ${cliente.genero }>Masculino</option>
-                    <option value="F" ${cliente.genero }>Feminino</option>
+                <select name="genero" required="required" >
+                	<option<c:if test="${cliente.genero.equals('Masculino') }">selected</c:if> value="Masculino">Masculino</option>
+                	<option  <c:if test="${cliente.genero.equals('Feminino') }">selected</c:if> value="Feminino">Feminino</option>
+                    
                 </select>
             </div>
             <label for="">Data de Nascimento</label>
             <div class="input">
-                <input type="date" name="nascimento" placeholder="data de nascimento"${cliente.nascimento }>
+            
+                <input type="date" name="nascimento" required="required" placeholder="data de nascimento" value="<fmt:formatDate pattern="yyyy-MM-dd" value="${cliente.nascimento.time}"/>">
             </div>
             <label for="">Produto de Interesse</label>
             <div class="input">
-                <input type="text" name="produto" placeholder="Produto de Interesse" ${cliente.produto }>
+                <input type="text" name="produto" placeholder="Produto de Interesse" required="required" value="${cliente.produto }">
             </div>
             <div id="bt">
                 <button type="submit">Enviar</button>
             </div>
         </form>
+        
     </div>
 </body>
 </html>

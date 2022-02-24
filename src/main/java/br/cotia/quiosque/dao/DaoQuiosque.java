@@ -5,7 +5,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -20,10 +20,11 @@ public class DaoQuiosque {
 	}
 
 	public void cadastro(Cliente cliente) {
-		String sql = "insert into tb_cadastro" + "(nome, endereco, nascimento, telefone, email)" + "values (?,?,?,?,?)";
+		String sql = "insert into tb_cadastro" + "(nome, endereco, nascimento, telefone, email, dataCadastro, genero)" + "values (?,?,?,?,?,?,?)";
 
 		PreparedStatement preparador;
 		try {
+		
 			// guardando os dados imputados no bd
 			preparador = conexao.prepareStatement(sql);
 			preparador.setString(1, cliente.getNome());
@@ -31,6 +32,11 @@ public class DaoQuiosque {
 			preparador.setDate(3, new Date(cliente.getNascimento().getTimeInMillis()));
 			preparador.setString(4, cliente.getTelefone());
 			preparador.setString(5, cliente.getEmail());
+			Calendar gc = Calendar.getInstance();
+			cliente.setDataCadastro(gc);
+			preparador.setTimestamp(6, new Timestamp(cliente.getDataCadastro().getTimeInMillis()));
+			preparador.setString(7, cliente.getGenero());
+			
 			preparador.execute();
 			preparador.close();
 			conexao.close();
@@ -44,8 +50,7 @@ public class DaoQuiosque {
 	// atualizar
 
 	public void atualizar(Cliente cliente) {
-		String sql = "update tb_cadastro set nome = ?, endereco = ?,"
-				+ "nascimento = ?, telefone = ?, email = ? where id = ?";
+		String sql = "update tb_cadastro set nome = ?, endereco = ?, nascimento = ?, telefone = ?, email = ?, genero = ? where id = ?";
 		// preparando o comando
 		PreparedStatement preparador;
 		try {
@@ -55,7 +60,8 @@ public class DaoQuiosque {
 			preparador.setDate(3, new Date(cliente.getNascimento().getTimeInMillis()));
 			preparador.setString(4, cliente.getTelefone());
 			preparador.setString(5, cliente.getEmail());
-			preparador.setLong(6,cliente.getId());
+			preparador.setString(6, cliente.getGenero());
+			preparador.setLong(7,cliente.getId());
 			preparador.execute();
 			preparador.close();
 			conexao.close();
@@ -90,16 +96,16 @@ public class DaoQuiosque {
 		PreparedStatement inserir;
 		try {
 			inserir = conexao.prepareStatement(sql);
-			ResultSet rs = inserir.executeQuery();
 			inserir.setLong(1, idCliente);
+			ResultSet rs = inserir.executeQuery();
 			if (rs.next()) {
 				c = new Cliente();
 				c.setId(rs.getLong("id"));
 				c.setNome(rs.getString("nome"));
-				c.setEmail(rs.getString("email"));
 				c.setEndereco(rs.getString("endereco"));
-				c.setTelefone(rs.getString("telefone"));
-
+				
+				
+				
 				Calendar conversorDate = Calendar.getInstance();
 				// extraindo o date do resultset
 				Date dataBd = rs.getDate("nascimento");
@@ -107,18 +113,31 @@ public class DaoQuiosque {
 				conversorDate.setTimeInMillis(dataBd.getTime());
 				// setando validade do produto
 				c.setNascimento(conversorDate);
+				c.setTelefone(rs.getString("telefone"));
+				c.setEmail(rs.getString("email"));
+				
+				Calendar conversor = Calendar.getInstance();
+				
+				Date dataCad = rs.getDate("dataCadastro");
+				
+				conversor.setTimeInMillis(dataCad.getTime());
+				c.setDataCadastro(conversor);
+				c.setGenero(rs.getString("genero"));
+
+				
 
 			}
 			rs.close();
 			inserir.close();
 			conexao.close();
 
-			return c;
+			
 
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-
+		
+		return c;
 	}
 
 	// listando
@@ -133,20 +152,35 @@ public class DaoQuiosque {
 				Cliente c = new Cliente();
 				c.setId(rs.getLong("id"));
 				c.setNome(rs.getString("nome"));
-				c.setEndereco(rs.getString("endereco"));
-				c.setEmail(rs.getString("email"));
-				c.setTelefone(rs.getString("telefone"));
-
 				Calendar conversorDate = Calendar.getInstance();
 				// extraindo o date do resultset
 				Date dataBd = rs.getDate("nascimento");
 				// setar a data do calendar pela data no Date
+				
 				conversorDate.setTimeInMillis(dataBd.getTime());
 				// setando validade do produto
 				c.setNascimento(conversorDate);
+				
+				c.setEndereco(rs.getString("endereco"));
+				c.setEmail(rs.getString("email"));
+				c.setTelefone(rs.getString("telefone"));
+				
+				Calendar conversor = Calendar.getInstance();
+				
+				Timestamp dataCad = rs.getTimestamp("dataCadastro");
+				
+				conversor.setTimeInMillis(dataCad.getTime());
+				c.setDataCadastro(conversor);
+				
+				
+				c.setGenero(rs.getString("genero"));
+
+				
 				list.add(c);
 
 			}
+	
+			
 			rs.close();
 			inserir.close();
 			conexao.close();
@@ -157,4 +191,5 @@ public class DaoQuiosque {
 		}
 
 	}
+	
 }

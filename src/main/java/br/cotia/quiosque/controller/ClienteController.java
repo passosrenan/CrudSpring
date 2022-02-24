@@ -11,7 +11,7 @@ import br.cotia.quiosque.model.Cliente;
 public class ClienteController {
 	@RequestMapping("formCliente")
 	public String form(Model modelo) {
-		return "form";
+		return "formcliente";
 	}
 	@RequestMapping("cadastrarCliente")
 	public String cadastrarCliente(Cliente cliente) {
@@ -21,9 +21,15 @@ public class ClienteController {
 		System.out.println(cliente.getTelefone());
 		System.out.println(cliente.getProduto());
 		System.out.println(cliente.getNascimento());
+		System.out.println(cliente.getGenero());
+		System.out.println(cliente.getDataCadastro());
 		
 		DaoQuiosque dao = new DaoQuiosque();
+		if(cliente.getId() == null) {
 		dao.cadastro(cliente);
+		}else {
+			dao.atualizar(cliente);
+		}
 		return "redirect:listaClientes";
 	}
 	@RequestMapping("listaClientes")
@@ -46,7 +52,10 @@ public class ClienteController {
 	@RequestMapping("alterarCliente")
 	public String alterar(long idCliente, Model model) {
 		DaoQuiosque dao = new DaoQuiosque();
-		model.addAttribute("clientes",dao.buscar(idCliente));
-		return "forward:form";
+		model.addAttribute("cliente",dao.buscar(idCliente));
+		return "forward:formCliente";
 	}
+	
+	
 }
+	

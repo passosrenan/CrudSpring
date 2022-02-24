@@ -29,7 +29,7 @@
 </style>
 </head>
 <body>
-	<<table>
+	<table>
 		<tr>
 		<th>ID</th>
 		<th>Nome</th>
@@ -37,6 +37,8 @@
 		<th>nascimento</th>
 		<th>telefone</th>
 		<th>Email</th>
+		<th>Data Cadastro</th>
+		<th>Genero</th>
 		
 		</tr>
 	<c:forEach items="${clientes }" var="c">
@@ -47,8 +49,12 @@
 				<td><fmt:formatDate  pattern="dd/MM/yyyy"  value="${c.nascimento.time }"/></td>
 				<td>${c.telefone}</td>
 				<td>${c.email }</td>
-				<td><a href="excluirCliente?idCliente=${c.id }"onclick="return confirm('Deseja realmente excluir?')">Excluir</td></a>
+				<td><fmt:formatDate pattern="dd/MM/yyyy HH:mm:ss" value="${c.dataCadastro.time }"/></td>
+				<td>${c.genero }</td>
+				<td><a href="excluirCliente?idCliente=${c.id }">Excluir</td></a>
 				<td><a href="alterarCliente?idCliente=${c.id }">Alterar</a></td>
+				
+				
 			</tr>
 	</c:forEach>
 	</table>
