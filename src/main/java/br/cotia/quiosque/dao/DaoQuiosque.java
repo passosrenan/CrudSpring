@@ -120,9 +120,7 @@ public class DaoQuiosque {
 				c.setEmail(rs.getString("email"));
 				
 				Calendar conversor = Calendar.getInstance();
-				
 				Date dataCad = rs.getDate("dataCadastro");
-				
 				conversor.setTimeInMillis(dataCad.getTime());
 				c.setDataCadastro(conversor);
 				c.setGenero(rs.getString("genero"));
@@ -170,9 +168,7 @@ public class DaoQuiosque {
 				c.setTelefone(rs.getString("telefone"));
 				
 				Calendar conversor = Calendar.getInstance();
-				
 				Timestamp dataCad = rs.getTimestamp("dataCadastro");
-				
 				conversor.setTimeInMillis(dataCad.getTime());
 				c.setDataCadastro(conversor);
 				
