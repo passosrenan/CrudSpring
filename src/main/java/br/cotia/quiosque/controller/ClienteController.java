@@ -38,8 +38,7 @@ public class ClienteController {
 		model.addAttribute("clientes", dao.listar());
 		
 		return"listaClientes";
-		
-		
+			
 	}
 	@RequestMapping("excluirCliente")
 	public String excluir(long idCliente) {

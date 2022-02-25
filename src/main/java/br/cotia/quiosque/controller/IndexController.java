@@ -62,7 +62,6 @@ public class IndexController {
 		horaDia = c.getDataCadastro().get(Calendar.HOUR_OF_DAY);
 		
 		if(horaDia <12) {
-			
 			horaManha++;
 			
 		}else if(horaDia <18) {
@@ -115,7 +114,7 @@ public class IndexController {
 		switch (c.getGenero()) {
 		case "Masculino":
 			contMasculino++;
-			break;	
+			break;	   
 		case "Feminino":
 			contFeminino++;
 			break;

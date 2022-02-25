@@ -1,3 +1,6 @@
+<%@page import="javax.swing.JOptionPane"%>
+<%@page import="br.cotia.quiosque.model.Cliente"%>
+<%@page import="java.util.Calendar"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
         <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix = "c" %>
@@ -83,16 +86,18 @@
             </div>
             <label for="">Genero</label>
             <div class="">
-                <select name="genero" required="required" >
-                	<option<c:if test="${cliente.genero.equals('Masculino') }">selected</c:if> value="Masculino">Masculino</option>
-                	<option  <c:if test="${cliente.genero.equals('Feminino') }">selected</c:if> value="Feminino">Feminino</option>
+                <select name="genero" required="required"   >
+               
+                	<option value="Masculino" <c:if test="${cliente.genero.equals('Masculino') }">selected</c:if>>Masculino</option>
+                	<option   value="Feminino"  <c:if test="${cliente.genero.equals('Feminino') }">selected</c:if>>Feminino</option>
                     
                 </select>
             </div>
             <label for="">Data de Nascimento</label>
             <div class="input">
             
-                <input type="date" name="nascimento" required="required" placeholder="data de nascimento" value="<fmt:formatDate pattern="yyyy-MM-dd" value="${cliente.nascimento.time}"/>">
+                <input  type="date" name="nascimento" id="valida" required="required" placeholder="data de nascimento" value="<fmt:formatDate pattern="yyyy-MM-dd" value="${cliente.nascimento.time}"/>">
+             
             </div>
             <label for="">Produto de Interesse</label>
             <div class="input">
@@ -101,6 +106,7 @@
             <div id="bt">
                 <button type="submit">Enviar</button>
             </div>
+           
         </form>
         
     </div>

@@ -29,7 +29,10 @@ public class DaoQuiosque {
 			preparador = conexao.prepareStatement(sql);
 			preparador.setString(1, cliente.getNome());
 			preparador.setString(2, cliente.getEndereco());
-			preparador.setDate(3, new Date(cliente.getNascimento().getTimeInMillis()));
+			Calendar hoje = Calendar.getInstance();
+			
+				preparador.setDate(3, new Date(cliente.getNascimento().getTimeInMillis()));
+		
 			preparador.setString(4, cliente.getTelefone());
 			preparador.setString(5, cliente.getEmail());
 			Calendar gc = Calendar.getInstance();
@@ -140,6 +143,7 @@ public class DaoQuiosque {
 		return c;
 	}
 
+	
 	// listando
 	public List<Cliente> listar() {
 		String sql = "select * from tb_cadastro order by nome asc";

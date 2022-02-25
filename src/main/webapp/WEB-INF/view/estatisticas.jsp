@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h1>Quantidade ${quinta}</h1>
+<h1>Quantidade ${sexta}</h1>
 <h1>Período ${Tarde }</h1>
 <h1>Genero ${feminino }</h1>
 <h1>Faixa Etária ${jovem }</h1>
