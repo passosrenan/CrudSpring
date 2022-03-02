@@ -20,26 +20,28 @@ public class DaoQuiosque {
 	}
 
 	public void cadastro(Cliente cliente) {
-		String sql = "insert into tb_cadastro" + "(nome, endereco, nascimento, telefone, email, dataCadastro, genero)" + "values (?,?,?,?,?,?,?)";
+		String sql = "insert into tb_cadastro"
+				+ "(nome, endereco, nascimento, telefone, email, dataCadastro, genero, produto)"
+				+ "values (?,?,?,?,?,?,?,?)";
 
 		PreparedStatement preparador;
 		try {
-		
+
 			// guardando os dados imputados no bd
 			preparador = conexao.prepareStatement(sql);
 			preparador.setString(1, cliente.getNome());
 			preparador.setString(2, cliente.getEndereco());
 			Calendar hoje = Calendar.getInstance();
-			
-				preparador.setDate(3, new Date(cliente.getNascimento().getTimeInMillis()));
-		
+
+			preparador.setDate(3, new Date(cliente.getNascimento().getTimeInMillis()));
+
 			preparador.setString(4, cliente.getTelefone());
 			preparador.setString(5, cliente.getEmail());
 			Calendar gc = Calendar.getInstance();
 			cliente.setDataCadastro(gc);
 			preparador.setTimestamp(6, new Timestamp(cliente.getDataCadastro().getTimeInMillis()));
 			preparador.setString(7, cliente.getGenero());
-			
+			preparador.setString(8, cliente.getProduto());
 			preparador.execute();
 			preparador.close();
 			conexao.close();
@@ -53,7 +55,7 @@ public class DaoQuiosque {
 	// atualizar
 
 	public void atualizar(Cliente cliente) {
-		String sql = "update tb_cadastro set nome = ?, endereco = ?, nascimento = ?, telefone = ?, email = ?, genero = ? where id = ?";
+		String sql = "update tb_cadastro set nome = ?, endereco = ?, nascimento = ?, telefone = ?, email = ?, genero = ?, produto =? where id = ?";
 		// preparando o comando
 		PreparedStatement preparador;
 		try {
@@ -64,11 +66,11 @@ public class DaoQuiosque {
 			preparador.setString(4, cliente.getTelefone());
 			preparador.setString(5, cliente.getEmail());
 			preparador.setString(6, cliente.getGenero());
-			preparador.setLong(7,cliente.getId());
+			preparador.setString(7, cliente.getProduto());
+			preparador.setLong(8, cliente.getId());
 			preparador.execute();
 			preparador.close();
 			conexao.close();
-
 
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
@@ -106,9 +108,7 @@ public class DaoQuiosque {
 				c.setId(rs.getLong("id"));
 				c.setNome(rs.getString("nome"));
 				c.setEndereco(rs.getString("endereco"));
-				
-				
-				
+
 				Calendar conversorDate = Calendar.getInstance();
 				// extraindo o date do resultset
 				Date dataBd = rs.getDate("nascimento");
@@ -118,30 +118,26 @@ public class DaoQuiosque {
 				c.setNascimento(conversorDate);
 				c.setTelefone(rs.getString("telefone"));
 				c.setEmail(rs.getString("email"));
-				
+
 				Calendar conversor = Calendar.getInstance();
 				Date dataCad = rs.getDate("dataCadastro");
 				conversor.setTimeInMillis(dataCad.getTime());
 				c.setDataCadastro(conversor);
 				c.setGenero(rs.getString("genero"));
-
-				
+				c.setProduto(rs.getString("produto"));
 
 			}
 			rs.close();
 			inserir.close();
 			conexao.close();
 
-			
-
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-		
+
 		return c;
 	}
 
-	
 	// listando
 	public List<Cliente> listar() {
 		String sql = "select * from tb_cadastro order by nome asc";
@@ -158,29 +154,28 @@ public class DaoQuiosque {
 				// extraindo o date do resultset
 				Date dataBd = rs.getDate("nascimento");
 				// setar a data do calendar pela data no Date
-				
+
 				conversorDate.setTimeInMillis(dataBd.getTime());
 				// setando validade do produto
 				c.setNascimento(conversorDate);
-				
+
 				c.setEndereco(rs.getString("endereco"));
 				c.setEmail(rs.getString("email"));
 				c.setTelefone(rs.getString("telefone"));
-				
+
 				Calendar conversor = Calendar.getInstance();
 				Timestamp dataCad = rs.getTimestamp("dataCadastro");
 				conversor.setTimeInMillis(dataCad.getTime());
 				c.setDataCadastro(conversor);
-				
-				
+
 				c.setGenero(rs.getString("genero"));
 
-				
+				c.setProduto(rs.getString("produto"));
+
 				list.add(c);
 
 			}
-	
-			
+
 			rs.close();
 			inserir.close();
 			conexao.close();
@@ -191,5 +186,5 @@ public class DaoQuiosque {
 		}
 
 	}
-	
+
 }

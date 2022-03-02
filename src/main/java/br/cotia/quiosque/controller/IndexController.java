@@ -139,7 +139,7 @@ public class IndexController {
 		model.addAttribute("jovem", contadorJovem);
 		model.addAttribute("Adulto", contadorAdulto);
 		model.addAttribute("idoso", contadorIdoso);
-		model.addAttribute("Manhã", horaManha);
+		model.addAttribute("Manha", horaManha);
 		model.addAttribute("masculino", contMasculino);
 		model.addAttribute("feminino", contFeminino);
 		
