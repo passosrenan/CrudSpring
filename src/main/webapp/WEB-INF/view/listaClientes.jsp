@@ -9,8 +9,12 @@
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
 <style>
-	h1{
-		text-align: center;
+
+	body{
+		font-family: Mukta, sans-serif;
+		height: 100vh;
+		align-items:center;
+		justify-content: center;
 	}
 	
 	table{
@@ -24,13 +28,66 @@
 		padding: 10px;
 		text-align: center;
 	}
+	.top{ 
+		background-color:#87CEEB;	 
+	}
+	tr{
+		background-color: #F0F8FF;	
+	}
 	
-
+	table {
+	  	border: 2px solid #4F4F4F;
+  		border-radius: 10px;
+  		margin-top: 5vh;	
+	}
+	.bt{
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    display: inline-block;
+	}
+	
+	
+	a{
+		text-decoration: none;
+		color: black;
+	}
+	
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        header{
+            background-color:#E0FFFF	; 
+            height: 8vh;   
+            
+        }
+        nav{
+            font-family:Verdana, Geneva, Tahoma, sans-serif;
+            float: right;
+            margin-top: 2.5vh;
+            margin-right: 4%;
+            
+        }
+        nav p{
+            display: inline;
+            margin-left: 20px;
+        }
+    
+	
 </style>
 </head>
 <body>
+	<header>
+        <nav>
+            <p><a href="formCliente">Formulário</a></p>
+            <p><a href="listaClientes">Lista de Clientes</a></p>
+            <p><a href="Estatistica">Estatisticas</a></p>
+        </nav>
+    </header>
 	<table>
-		<tr>
+		<tr class="top">
 		<th>ID</th>
 		<th>Nome</th>
 		<th>Endereço</th>
@@ -51,8 +108,8 @@
 				<td>${c.email }</td>
 				<td><fmt:formatDate pattern="dd/MM/yyyy HH:mm:ss" value="${c.dataCadastro.time }"/></td>
 				<td>${c.genero }</td>
-				<td><a href="excluirCliente?idCliente=${c.id }">Excluir</td></a>
-				<td><a href="alterarCliente?idCliente=${c.id }">Alterar</a></td>
+				<td><button class="btE"><a href="excluirCliente?idCliente=${c.id }">Excluir</td></a></button>
+				<td><button class="bt"><a href="alterarCliente?idCliente=${c.id }">Alterar</a></button></td>
 				
 				
 			</tr>
