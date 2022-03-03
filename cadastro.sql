@@ -26,7 +26,8 @@ SET time_zone = "+00:00";
 --
 -- Estrutura da tabela `tb_cadastro`
 --
-
+CREATE DATABASE cadastro;
+USE DATABASE cadastro;
 CREATE TABLE `tb_cadastro` (
   `id` int(11) NOT NULL,
   `nome` varchar(50) DEFAULT NULL,
