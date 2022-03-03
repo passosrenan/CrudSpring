@@ -10,7 +10,7 @@ public class ConnectionFactoryQui {
 	public static Connection conectar() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			Connection conexao = DriverManager.getConnection("jdbc:mysql://localhost:8111/cadastro",USUARIO,SENHA);
+			Connection conexao = DriverManager.getConnection("jdbc:mysql://localhost:3306/cadastro",USUARIO,SENHA);
 			return conexao;
 		} catch (Exception e) {
 			throw new RuntimeException(e);
